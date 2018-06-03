@@ -13,7 +13,10 @@ class Image extends React.Component {
     super(props);
     this.calcImageSize = this.calcImageSize.bind(this);
     this.state = {
-      size: 200
+      size: 200,
+      classes: "image-root",
+      isRotated: false,
+      expanded: false
     };
   }
 
@@ -35,20 +38,51 @@ class Image extends React.Component {
     return `https://farm${dto.farm}.staticflickr.com/${dto.server}/${dto.id}_${dto.secret}.jpg`;
   }
 
+  rotate() {
+         this.setState({isRotated: !this.state.isRotated}, () => {
+             if(this.state.isRotated){
+                 this.state.classes += " rotate";
+                 this.setState({classes: this.state.classes});
+             }
+             else{
+                 this.setState({classes: this.state.classes.replace(" rotate", "")});
+             }
+         });
+     }
+
+
+  expand(){
+         this.setState({expanded: !this.state.expanded}, () => {
+             if(this.state.expanded){
+                 this.setState({classes: this.state.classes += " expand"});
+             }
+             else{
+                 this.setState({classes: this.state.classes.replace(" expand", "")});
+             }
+           });
+           }
+
+
   render() {
     return (
-      <div
-        className="image-root"
-        style={{
-          backgroundImage: `url(${this.urlFromDto(this.props.dto)})`,
-          width: this.state.size + 'px',
-          height: this.state.size + 'px'
-        }}
-        >
-        <div>
-          <FontAwesome className="image-icon" name="sync-alt" title="rotate"/>
-          <FontAwesome className="image-icon" name="trash-alt" title="delete"/>
-          <FontAwesome className="image-icon" name="expand" title="expand"/>
+
+
+      <div className="image-container">
+                   <div
+                       className={this.state.classes}
+                       style={{
+                           backgroundImage: `url(${this.urlFromDto(this.props.dto)})`,
+                           width: this.state.size + 'px',
+                           height: this.state.size + 'px'
+                       }}
+                   >
+</div>
+        <div className= "buttons">
+           <FontAwesome onClick={() => { this.rotate(); }} className="image-icon" name="sync-alt" title="rotate" />
+           <div onClick={() => this.props.onPassValue(this.props.dto)}>
+            <FontAwesome className="image-icon" name="trash-alt" title="delete"/>
+          </div>
+          <FontAwesome onClick={() => { this.expand(); }} className="image-icon" name="expand" title="expand" />
         </div>
       </div>
     );

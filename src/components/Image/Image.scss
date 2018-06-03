@@ -6,8 +6,51 @@
   box-sizing: border-box;
   position: relative;
   border: 1px solid white;
+}
 
-  > div {
+.image-root:hover + div{
+  visibility: visible;
+}
+
+.buttons:hover{
+  visibility: visible;
+}
+
+.image-icon {
+    font-size: 20px;
+    vertical-align: middle;
+    border: 1px solid #ccc;
+    color: #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 12px;
+    margin: 3px;
+
+    &:hover {
+      color: white;
+      border-color: white;
+    }
+  }
+
+.image-container{
+    position: relative;
+    display: inline-block;
+}
+
+.expand{
+  transform: scale(5);
+  z-index: 1000;
+}
+
+.expand + .buttons{
+  z-index: 1001;
+}
+
+.buttons{
+    position: absolute;
+    top: 35%;
+    left: 15%;
+
     visibility: hidden;
     background: rgba(0, 0, 0, 0.7);
     cursor: pointer;
@@ -25,26 +68,18 @@
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-
-  &:hover > div {
-    visibility: visible;
-  }
-
-  .image-icon {
-    font-size: 20px;
-    vertical-align: middle;
-    border: 1px solid #ccc;
-    color: #ccc;
-    border-radius: 5px;
-    cursor: pointer;
-    padding: 12px;
-    margin: 3px;
-
-    &:hover {
-      color: white;
-      border-color: white;
-    }
-  }
 }
 
+.rotate{
+    animation: rotate-animation 3s ease;
+    animation-fill-mode: forwards;
+}
+
+@keyframes rotate-animation {
+    0% {
+    transform: rotate(0deg);
+    }
+    100% {
+    transform: rotate(180deg);
+    }
+}

@@ -15,6 +15,18 @@ class Gallery extends React.Component {
       images: [],
       galleryWidth: this.getGalleryWidth()
     };
+    this.getChildValue = this.getChildValue.bind(this);
+  }
+
+  filterOutImage(images, imageId) {
+    return images.filter(image => image.id !== imageId);
+  }
+  getChildValue(value){
+    const images = this.filterOutImage(this.state.images, value.id);
+    this.setState({
+      images: images,
+      galleryWidth: this.getGalleryWidth()
+    });
   }
 
   getGalleryWidth(){
@@ -60,7 +72,7 @@ class Gallery extends React.Component {
     return (
       <div className="gallery-root">
         {this.state.images.map(dto => {
-          return <Image key={'image-' + dto.id} dto={dto} galleryWidth={this.state.galleryWidth}/>;
+          return <Image key={'image-' + dto.id} dto={dto} galleryWidth={this.state.galleryWidth} onPassValue={this.getChildValue}/>;
         })}
       </div>
     );
